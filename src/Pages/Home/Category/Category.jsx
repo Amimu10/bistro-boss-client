@@ -22,7 +22,7 @@ const Category = () => {
     return (
         <section className="container mx-auto lg:px-8 px-4 mb-16">
             <SectionTitle
-            subHeading="---From 11:00am to 10:00pm---"
+            subHeading="From 11:00am to 10:00pm"
             heading="ORDER ONLINE"
             >
 
