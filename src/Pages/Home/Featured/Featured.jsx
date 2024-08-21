@@ -5,14 +5,14 @@ import "./Featured.css";
 
 const Featured = () => {
     return (
-        <section className="featured-item bg-fixed bg-[#151515] bg-opacity-50 text-white px-12 py-16">
+        <section className="featured-item bg-fixed hero-overlay bg-opacity-100 text-white px-12 py-16">
             <SectionTitle className="text-white"
             subHeading="from our menu"
             heading="FROM OUR MENU"
             >
          
             </SectionTitle>
-            <div className=" grid items-center md:grid-cols-2 grid-cols-1 gap-12 px-16 ">
+            <div className="grid items-center md:grid-cols-2 grid-cols-1 gap-12 px-16 ">
                 <div>
                     <img src={featuredImg} alt=""/>
                 </div>

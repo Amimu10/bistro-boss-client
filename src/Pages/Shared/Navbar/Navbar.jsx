@@ -6,13 +6,10 @@ const Navbar = () => {
             <Link>Home</Link>
          </li>
          <li>
-            <Link>Contact Us</Link>
+            <Link to="/menu">Our Menu</Link>
          </li>
          <li>
-            <Link>Dashboard</Link>
-         </li>
-         <li>
-            <Link>Our Shop</Link>
+            <Link to="/order">Order Food</Link>
          </li>
     </>
     return (
@@ -42,7 +39,7 @@ const Navbar = () => {
              {navItems}
             </ul>
           </div>
-          <a className="btn btn-ghost md:text-xl text-lg text-white ">Bistro Boss</a>
+          <Link to="/" className="btn btn-ghost md:text-xl text-lg text-white ">Bistro Boss</Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
