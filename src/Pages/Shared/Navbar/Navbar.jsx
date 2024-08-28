@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../Provider/AuthProvider";
 
 const Navbar = () => {
+  const {user, logOut} = useContext(AuthContext);
+
     const navItems = <>
          <li>
             <Link>Home</Link>
@@ -11,10 +15,19 @@ const Navbar = () => {
          <li>
             <Link to="/order">Order Food</Link>
          </li>
-         <li>
-            <Link to="/login">Login</Link>
-         </li>
+  
     </>
+
+    const handleLogOut = () => {
+      logOut()
+      .then(() => {
+ 
+      })
+      .catch(error => {
+        console.log(error.message);
+      })
+
+    }
     return (
 
        <div className=" mx-auto "> 
@@ -38,19 +51,25 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow text-center">
              {navItems}
             </ul>
           </div>
           <Link to="/" className="btn btn-ghost md:text-xl text-lg text-white ">Bistro Boss</Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
+          <ul className="menu menu-horizontal px-1 text-center">
          {navItems}
           </ul>
         </div>
         <div className="navbar-end flex justify-end mx-4">
-          <a className="btn">Button</a>
+        {
+      user ? <button onClick={handleLogOut} className="btn btn-ghost uppercase text-white bg-secondary px-3 py-2">Sign Out</button>
+      :
+      <Link to="/login"
+      ><button className="btn btn-ghost text-white uppercase bg-secondary px-3 py-2">Login</button>
+      </Link>
+     }
         </div>
        </div>
        </div>

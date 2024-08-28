@@ -21,6 +21,10 @@ const Register = () => {
 
     const onSubmit = (data) => {
       console.log(data)
+      creatUser(data.email, data.password)
+      .then(result => {
+        console.log(result.user);
+      })
     }
 
 
@@ -116,11 +120,6 @@ const Register = () => {
                 {errors.password?.type === "minLength" && <span className="text-red-600 text-sm mt-2">Password must be 6 characters</span>}
                 {errors.password?.type === "maxLength" && <span className="text-red-600 text-sm mt-2">Password must be less then 20 characters</span>}
                 {errors.password?.type === "pattern" && <span className="text-red-600 text-sm mt-2">Password must have at least one uppercase, one lowercase & one special characters</span>}
-                <label className="label">
-                  <a href="#" className="label-text-alt link link-hover">
-                    Forgot password? 
-                  </a>
-                </label>
               </div>
               <div className="form-control mt-6">
                 <button className="btn bg-secondary hover:bg-secondary text-white">
