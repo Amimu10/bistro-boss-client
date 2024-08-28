@@ -1,5 +1,6 @@
 import MenuItem from "../../../components/PopularMenu/MenuItem/MenuItem";
 import SectionCover from "../../Shared/SectionCover/SectionCover";
+import { Link } from 'react-router-dom';
 
 
 const MenuCategory = ({items, title, img}) => {
@@ -13,6 +14,11 @@ const MenuCategory = ({items, title, img}) => {
                     ></MenuItem>)
                 }
             </div>
+          <div className="text-center mb-5">
+         <Link to={`/order/${title}`}>
+         <button className="uppercase  text-primary border-primary font-cinzel font-semibold border-0 border-b-4 rounded-md my-4 px-3 py-2">ORDER YOUR FAVOURITE FOOD</button>
+         </Link>
+          </div>
         </div>
     );
 };
