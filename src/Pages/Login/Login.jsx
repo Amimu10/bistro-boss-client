@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import loginImg from "../../assets/others/register.png";
 import formBg from "../../assets/reservation/login-bg.png";
 import { useContext, useEffect, useState } from "react";
@@ -15,6 +15,9 @@ const [showPassword, setShowPassword] = useState(false);
 const [disabled, setDisabled] = useState(true); 
 const {signIn} = useContext(AuthContext);
 const navigate = useNavigate(); 
+const location = useLocation(); 
+
+const from = location.state?.form?.pathname || "/";  
 
 useEffect(() => {
   loadCaptchaEnginge(6); 
@@ -31,7 +34,7 @@ const handleLogin = (event) => {
     .then(result => {
       console.log(result.user);
       toast.success("User login Successfully!", { duration: 3000 }); 
-      navigate("/");
+      navigate(from, {replace: true}); 
     })
     .catch(error => {
       console.log(error.message); 
@@ -105,7 +108,7 @@ const handleValidateCaptcha = (e) => {
                   name="captcha"
                   placeholder="Type the captha above"
                   className="input input-bordered focus:border-none hover:border-secondary "
-                  required
+                  // required
                 />
               </div>
                 <label className="label">
@@ -115,7 +118,7 @@ const handleValidateCaptcha = (e) => {
                 </label>
               </div>
               <div className="form-control mt-6">
-                <button  disabled={disabled} className="btn bg-secondary hover:bg-secondary text-white">
+                <button  disabled={false} className="btn bg-secondary hover:bg-secondary text-white">
                   Login
                 </button>
               </div>

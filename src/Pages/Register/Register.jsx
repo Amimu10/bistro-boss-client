@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { FaEye, FaEyeSlash, FaHome } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import loginImg from "../../assets/others/register.png";
 import formBg from "../../assets/reservation/login-bg.png";
 import googleImg from "../../assets/icon/google.png";
@@ -8,14 +8,17 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form"
+import GoogleLogin from "../Login/SocialLogin/GoogleLogin";
 
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const {creatUser} = useContext(AuthContext);
+    const {creatUser, updateUserProfile} = useContext(AuthContext);
+    const navigate = useNavigate(); 
 
     const {
       register,
       handleSubmit,
+      reset,
       formState: { errors },
     } = useForm()
 
@@ -23,7 +26,16 @@ const Register = () => {
       console.log(data)
       creatUser(data.email, data.password)
       .then(result => {
-        console.log(result.user);
+        const loggedUser = result?.user;
+        console.log(loggedUser);
+        updateUserProfile(data.email, data.password)
+        .then(() => {
+          console.log("user profile updated");
+          reset();
+          toast.success("User created Successfully!", { duration: 3000 }); 
+          navigate("/");
+        })
+      
       })
     }
 
@@ -79,6 +91,20 @@ const Register = () => {
               </div>
               <div className="form-control">
                 <label className="label">
+                  <span className="label-text">Photo URL</span>
+                </label>
+                <input
+                  type="photo"
+                  {...register("photo",  { required: true })} 
+                  name="photo"
+                  placeholder="Photo URL"
+                  className="input input-bordered focus:border-none hover:border-secondary "
+                 
+                />
+                {errors.photo && <span className="text-red-600 text-sm mt-2">Photo URL field is required</span>}
+              </div>
+              <div className="form-control">
+                <label className="label">
                   <span className="label-text">Email</span>
                 </label>
                 <input
@@ -130,10 +156,7 @@ const Register = () => {
             <div className="text-center font-medium space-y-4">
               <div className="text-center">
                 <h5>Or Sign In with</h5>
-                <Link>
-                  {" "}
-                  <img className="mx-auto mt-3 " src={googleImg} alt="" />
-                </Link>
+                <GoogleLogin></GoogleLogin>
               </div>
               <h5 className="pb-5">
                 Already have an account?{" "}

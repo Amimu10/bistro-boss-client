@@ -1,10 +1,15 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../Provider/AuthProvider";
+import { FaShoppingCart } from "react-icons/fa";
+import useCart from "../../../Hooks/useCart";
 
 const Navbar = () => {
   const {user, logOut} = useContext(AuthContext);
-
+  const name = user?.displayName;  
+  const photo = user?.photoURL;
+  const [cart] = useCart(); 
+  
     const navItems = <>
          <li>
             <Link>Home</Link>
@@ -13,8 +18,15 @@ const Navbar = () => {
             <Link to="/menu">Our Menu</Link>
          </li>
          <li>
-            <Link to="/order">Order Food</Link>
-         </li>
+            <Link to="/order/:category">Order Food</Link>  
+         </li>  
+         <li>
+            <Link to="/">
+            <div className="flex items-center space-x-2">
+            <FaShoppingCart className="text-[18px] text-white" />
+                <div className="badge badge-secondary">{cart.length}</div> 
+            </div></Link>  
+         </li>  
   
     </>
 
@@ -62,14 +74,38 @@ const Navbar = () => {
          {navItems}
           </ul>
         </div>
-        <div className="navbar-end flex justify-end mx-4">
-        {
-      user ? <button onClick={handleLogOut} className="btn btn-ghost uppercase text-white bg-secondary px-3 py-2">Sign Out</button>
-      :
-      <Link to="/login"
-      ><button className="btn btn-ghost text-white uppercase bg-secondary px-3 py-2">Login</button>
-      </Link>
-     }
+        <div className="navbar-end flex justify-end mx-2">
+        <li className="flex gap-2  items-center">
+              {user ? (
+                <>
+                  {name && photo && ( 
+                    <>
+                      <p className="text-[#eee] font-young text-sm">{name}</p>
+                      <img 
+                        src={photo}
+                        className="inline items-center mr-3 h-10 w-10 rounded-full"
+                        alt=""
+                      />
+                    </>
+                  )}
+                  <NavLink onClick={handleLogOut}>
+                    <Link className="bg-[#7AA93C] text-white font-young font-thin px-4 py-2 rounded">
+                      Sign Out
+                    </Link>
+                  </NavLink>
+                </>
+              ) : (
+                <NavLink>
+                  <Link
+                    to="/login"
+                    className="bg-[#7AA93C] text-white font-young font-thin px-4 py-2 rounded"
+                  >
+                    Login
+                  </Link>
+                </NavLink>
+              )}
+            </li>
+     
         </div>
        </div>
        </div>
